@@ -14,7 +14,7 @@ ignore = File.read('web/lib/javascripts/.gitignore')
 CLOBBER.include('pkg', 'web/chat/javascripts', *ignore)
 
 spec = Gem::Specification.new do |s|
-  s.name    = "vines"
+  s.name    = "vines-core"
   s.version = Vines::VERSION
 
   s.summary     = "Vines is an XMPP chat server that's easy to install and run."
