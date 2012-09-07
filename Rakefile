@@ -4,14 +4,9 @@ require 'rake'
 require 'rake/clean'
 require 'rake/testtask'
 require 'rubygems/package_task'
-require 'coffee-script'
-require 'uglifier'
 require_relative 'lib/vines/version'
 
-ignore = File.read('web/lib/javascripts/.gitignore')
-  .split("\n").map {|f| "web/lib/javascripts/#{f}" }
-
-CLOBBER.include('pkg', 'web/chat/javascripts', *ignore)
+CLOBBER.include('pkg')
 
 spec = Gem::Specification.new do |s|
   s.name    = "vines-core"
@@ -45,9 +40,6 @@ is mandatory on all client and server connections."
   s.add_dependency "nokogiri", "~> 1.4.7"
 
   s.add_development_dependency "minitest", "~> 2.12.1"
-  s.add_development_dependency "coffee-script", "~> 2.2.0"
-  s.add_development_dependency "coffee-script-source", "~> 1.2.0"
-  s.add_development_dependency "uglifier", "~> 1.2.4"
   s.add_development_dependency "rake"
   s.add_development_dependency "sqlite3"
 
@@ -55,9 +47,8 @@ is mandatory on all client and server connections."
 end
 
 desc 'Build distributable packages'
-task :build => :assets do
-  # create package task after assets are generated so they're included in FileList
-  spec.files = FileList['[A-Z]*', '{bin,lib,conf,web}/**/*'].to_a
+task :build do
+  spec.files = FileList['[A-Z]*', '{bin,lib,conf}/**/*'].to_a
   Gem::PackageTask.new(spec).define
   Rake::Task['gem'].invoke
 end
@@ -76,34 +67,6 @@ Rake::TestTask.new(:test) do |test|
   test.libs << 'test/storage'
   test.pattern = 'test/**/*_test.rb'
   test.warning = false
-end
-
-desc 'Compile and minimize web assets'
-task :assets do
-  # combine and compile library coffeescripts
-  File.open('web/lib/javascripts/base.js', 'w') do |basejs|
-    assets = %w[layout button contact filter session transfer router navbar notification login logout]
-    coffee = assets.inject('') do |sum, name|
-      sum + File.read("web/lib/coffeescripts/#{name}.coffee")
-    end
-    js = %w[jquery jquery.cookie raphael icons strophe].inject('') do |sum, name|
-      sum + File.read("web/lib/javascripts/#{name}.js")
-    end
-    compiled = js + CoffeeScript.compile(coffee)
-    compressed = Uglifier.compile(compiled)
-    basejs.write(compressed)
-  end
-
-  # combine and compile chat application's coffeescripts
-  Dir.mkdir('web/chat/javascripts') unless File.exists?('web/chat/javascripts')
-  File.open('web/chat/javascripts/app.js', 'w') do |appjs|
-    coffee = %w[chat init].inject('') do |sum, name|
-      sum + File.read("web/chat/coffeescripts/#{name}.coffee")
-    end
-    compiled = CoffeeScript.compile(coffee)
-    compressed = Uglifier.compile(compiled)
-    appjs.write(compressed)
-  end
 end
 
 task :default => [:clobber, :test, :build]
