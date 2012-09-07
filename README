@@ -1,3 +1,7 @@
+THIS IS A BRUTAL DISSECTION OF VINES. I'm experimenting with
+extracting a slim vines-core with a bunch of gems layered on top of
+it. This is totally broken and shouldn't be used by anybody.
+
 == Welcome to Vines
 
 Vines is an XMPP chat server that supports thousands of simultaneous connections
