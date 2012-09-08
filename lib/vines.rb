@@ -63,6 +63,7 @@ end
   fiber
   fileutils
   http/parser
+  json
   logger
   nokogiri
   openssl
