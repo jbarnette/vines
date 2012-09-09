@@ -19,7 +19,7 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency "bcrypt-ruby", "~> 3.0.1"
   gem.add_dependency "em-http-request", "~> 1.0.3"
-  gem.add_dependency "eventmachine", ">= 1.0.0.beta.4"
+  gem.add_dependency "eventmachine", "~> 1.0.0"
   gem.add_dependency "http_parser.rb", "~> 0.5.3"
   gem.add_dependency "nokogiri", "~> 1.5.5"
 
