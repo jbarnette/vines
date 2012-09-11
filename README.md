@@ -2,41 +2,4 @@
 extracting a slim vines-core with a bunch of gems layered on top of
 it. This is totally broken and shouldn't be used by anybody. There are
 no working development instructions right now. I suggest starting with
-`bundle install --binstubs b --path vendor/bundle && b/rake` if you
-really must poke around.
-
-# Welcome to Vines
-
-Vines is an XMPP chat server that supports thousands of simultaneous connections
-by using EventMachine for asynchronous IO. User data is stored in a SQL database,
-CouchDB, MongoDB, Redis, the file system, or a custom storage implementation
-that you provide. LDAP authentication can be used so user names and passwords
-aren't stored in the chat database. SSL encryption is mandatory on all client
-and server connections.
-
-The Vines XMPP server includes a web chat client. The web application is available
-immediately after starting the chat server at http://localhost:5280/chat/.
-
-Additional documentation can be found at www.getvines.org.
-
-## Usage
-
-1. gem install vines
-2. vines init wonderland.lit
-3. cd wonderland.lit && vines start
-4. Login with your favorite chat program (iChat, Adium, Pidgin, etc.) to
-   start chatting!
-
-## Dependencies
-
-Vines requires Ruby 1.9.2 or better. Instructions for installing the
-needed OS packages, as well as Ruby itself, are available at
-http://www.getvines.org/ruby.
-
-## Contact
-
-* David Graham <david@negativecode.com>
-
-## License
-
-Vines is released under the MIT license. Check the LICENSE file for details.
+`script/bootstrap && script/test` if you really must poke around.
